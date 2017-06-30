@@ -1,0 +1,11 @@
+<%= form_for @room, as: :room, url: rooms_path do |f|  %>
+  <% if @room.errors.any? %>
+    <% @room.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  <% end %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, placeholder: "Nom de la session" %>
+  </div>
+<% end %>
