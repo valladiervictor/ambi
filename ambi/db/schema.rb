@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170628142332) do
+ActiveRecord::Schema.define(version: 20170705151829) do
+
+  create_table "players", force: :cascade do |t|
+    t.integer "song_id"
+    t.integer "room_id"
+  end
 
   create_table "rooms", force: :cascade do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "player_id"
+    t.integer "owner_id"
   end
+
+  add_index "rooms", ["player_id"], name: "index_rooms_on_player_id"
+
+  create_table "songs", force: :cascade do |t|
+    t.string  "name"
+    t.string  "link"
+    t.integer "poll"
+    t.integer "room_id"
+    t.string  "thumbnail"
+  end
+
+  add_index "songs", ["room_id"], name: "index_songs_on_room_id"
 
 end

@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th></th>
+    <th>Titre</th>
+    <th>Vote</th>
+  </tr>
+  <% room.songs.order("poll DESC").each do |song| %>
+    <tr>
+      <td><img src="<%= song.thumbnail %>" width="200"></td>
+      <td><%= song.name %></td>
+      <td><span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
+        <%= song.poll %>
+        <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
+    </tr>
+  <% end %>
+</table>

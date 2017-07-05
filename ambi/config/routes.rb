@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   get 'pages/home'
+  get '' => 'pages#home'
+  get 'rooms/join' => 'rooms#join'
+  post 'songs/:room_id' => 'songs#create'
+  get 'rooms/next/:room_id' => 'rooms#next'
   resources :rooms, only: [:create, :show]
+  resources :songs, only: [:show, :update]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

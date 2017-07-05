@@ -1,6 +1,37 @@
 <h2><%= @room.name %></h2>
-<% if @display_video %>
-  <p>Video</p>
-<% else %>
-  <p>No video</p>
+<h3>Ajouter une vidéo</h3>
+
+<%= form_for :song, url: "/songs/" + @room.id.to_s, method: :post, remote:(@player.song_id) do |f| %>
+  <%= f.text_field :link, placeholder: 'Lien "partager" Youtube', required: true %>
+  <%= f.submit value: "Ajouter la video" %>
 <% end %>
+
+<h3>Video</h3>
+
+<% if session[:display_video] == true %>
+  <%= sync partial: 'player_show', resource: @player %>
+<% else %>
+  <h3>Vidéo diffusée ailleurs</h3>
+<% end %>
+
+
+
+<h3>Playlist</h3>
+
+<%= sync partial: 'room_songs', resource: @room %>
+
+
+<script>
+      function doMinus(song_id) {
+        $.ajax({
+          url: "/songs/" + song_id + "?poll=-1",
+          type: "PATCH"
+        })
+      }
+      function doPlus(song_id) {
+        $.ajax({
+          url: "/songs/" + song_id + "?poll=+1",
+          type: "PATCH"
+        })
+      }
+    </script>

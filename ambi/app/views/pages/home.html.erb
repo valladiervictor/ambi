@@ -5,7 +5,13 @@
     <% end %>
   <% end %>
   <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, placeholder: "Nom de la session" %>
+  <%= f.text_field :name, placeholder: "Nom de la session", required: true %>
+  <%= f.submit value: "Créer une session" %>
   </div>
 <% end %>
+
+<%= @session_joining_error%>
+<form action="<%= rooms_path + '/join' %>", method="get" do %>
+  <input type="text" name="name" placeholder="Nom de la session à rejoindre" required />
+  <input type="submit" value="Rejoindre une session" />
+</form>
