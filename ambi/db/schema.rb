@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170705151829) do
+ActiveRecord::Schema.define(version: 20170705100804) do
 
   create_table "players", force: :cascade do |t|
     t.integer "song_id"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(version: 20170705151829) do
   create_table "rooms", force: :cascade do |t|
     t.string  "name"
     t.integer "player_id"
-    t.integer "owner_id"
   end
 
   add_index "rooms", ["player_id"], name: "index_rooms_on_player_id"

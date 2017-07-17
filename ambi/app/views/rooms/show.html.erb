@@ -8,12 +8,24 @@
 
 <h3>Video</h3>
 
-<% if session[:display_video] == true %>
-  <%= sync partial: 'player_show', resource: @player %>
-<% else %>
-  <h3>Vidéo diffusée ailleurs</h3>
-<% end %>
+<label class="switch">
+  <% if session[:display_video] == true %>
+    Lecture activée
+    <input type="checkbox" id="unablePlayer" onchange="triggerPlayer()" checked>
+  <% else %>
+    Lecture désactivée
+    <input type="checkbox" id="unablePlayer" onchange="triggerPlayer()">
+  <% end %>
+  <div class="slider round"></div>
+</label>
 
+<script>
+      window.ytPlayerLoaded = false
+</script>
+<%= sync partial: 'current_song_title', resource: @player %>
+<% if session[:display_video] %>
+  <%= sync partial: 'player_show', resource: @player %>
+<% end %>
 
 
 <h3>Playlist</h3>
@@ -22,6 +34,12 @@
 
 
 <script>
+
+  function triggerPlayer() {
+    let display_video = document.getElementById("unablePlayer").checked
+    window.location = "<%= '/rooms/join?name=' + @room.name + '&display_video=' %>" + display_video
+  }
+
       function doMinus(song_id) {
         $.ajax({
           url: "/songs/" + song_id + "?poll=-1",

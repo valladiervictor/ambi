@@ -25,7 +25,11 @@ class RoomsController < ApplicationController
   def join
     @room = Room.find_by(name: params["name"])
     if !@room.blank?
-      session[:display_video] = false
+      if params["display_video"].blank?
+        session[:display_video] = false
+      else
+        session[:display_video] = params["display_video"] == "true"
+      end
       redirect_to @room
     else
       redirect_to controller: 'pages', action: 'home', session_joining_error: 'Pas de session à ce nom'
@@ -38,16 +42,21 @@ class RoomsController < ApplicationController
       render status: 400
     end
     @player = Player.find(@room.player_id)
-    Song.find(@player.song_id).destroy!
-    if @room.songs.any?
-      new_song = @room.songs.order("poll DESC").first
-      new_song.update room_id: nil
-      @player.update song_id: new_song.id
-      sync_update @room
-      render json: new_song.to_json, status: 200
+    current_song = Song.find(@player.song_id)
+    if current_song.link != params["current_song_link"] && current_song.id.to_s != params["current_song_id"]
+      render json: current_song.to_json, status: 200
     else
-      @player.update song_id: nil
-      render json: [], status: 200
+      Song.find(@player.song_id).destroy!
+      if @room.songs.any?
+        new_song = @room.songs.order("poll DESC").first
+        new_song.update room_id: nil
+        @player.update song_id: new_song.id
+        sync_update @room
+        render json: new_song.to_json, status: 200
+      else
+        @player.update song_id: nil
+        render json: [], status: 200
+      end
     end
   end
 

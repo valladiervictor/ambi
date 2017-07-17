@@ -17,7 +17,7 @@ class SongsController < ApplicationController
           format.json { render status: 400 }
           format.html { redirect_to "/pages/home" }
         end
-      end        
+      end
       thumbnail = "https://img.youtube.com/vi/#{link}/mqdefault.jpg"
       @song = Song.new(
         name: video.title,
@@ -29,13 +29,13 @@ class SongsController < ApplicationController
       @song.save
       if (is_current)
         @player.update song_id: @song.id
-        sync_update @player
+        render @room
       else
         @room.reload
         sync_update @room
       end
       respond_to do |format|
-        format.json { render status: 200 }
+        format.json { render json: [], status: 200 }
         format.html { redirect_to @room }
       end
     else
