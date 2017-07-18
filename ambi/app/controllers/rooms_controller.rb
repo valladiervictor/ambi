@@ -42,22 +42,26 @@ class RoomsController < ApplicationController
       render status: 400
     end
     @player = Player.find(@room.player_id)
-    current_song = Song.find(@player.song_id)
-    if current_song.id.to_s != params["current_song_id"]
+    if !@player.song_id
       render json: [], status: 200
     else
-      current_song.destroy!
-      if @room.songs.any?
-        new_song = @room.songs.order("poll DESC").first
-        new_song.update room_id: nil
-        @player.update song_id: new_song.id
-        @room.reload
-        sync_update @room
-        sync_update @player
-        render json: new_song.to_json, status: 200
-      else
-        @player.update song_id: nil
+      current_song = Song.find(@player.song_id)
+      if current_song.id.to_s != params["current_song_id"]
         render json: [], status: 200
+      else
+        current_song.destroy!
+        if @room.songs.any?
+          new_song = @room.songs.order("poll DESC").first
+          new_song.update room_id: nil
+          @player.update song_id: new_song.id
+          @room.reload
+          sync_update @room
+          sync_update @player
+          render json: new_song.to_json, status: 200
+        else
+          @player.update song_id: nil
+          render json: [], status: 200
+        end
       end
     end
   end
