@@ -9,13 +9,11 @@
   </div>
   <script>
 
-
-    var player;
-    loadPlayer();
+  var player;
+  loadPlayer();
 
   function loadPlayer() {
     if (typeof(YT) == 'undefined' || typeof(YT.Player) == 'undefined') {
-
       var tag = document.createElement('script');
       tag.src = "https://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -24,14 +22,10 @@
       window.onYouTubePlayerAPIReady = function() {
         onYouTubePlayer();
       };
-
     } else {
-
       onYouTubePlayer();
-
     }
   }
-
 
   function onYouTubePlayer() {
     player = new YT.Player('player', {
@@ -45,7 +39,6 @@
       }
     });
 
-    // 4. The API will call this function when the video player is ready.
     function onPlayerReady(event) {
       event.target.playVideo();
     }
