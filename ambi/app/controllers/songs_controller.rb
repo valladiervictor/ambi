@@ -5,7 +5,8 @@ class SongsController < ApplicationController
     @room = Room.find(params["room_id"])
     @player = Player.find(@room.player_id)
     if (@room)
-      link = params["song"]["link"].tr("/","=").split("=").last
+      link = params["song"]["link"].split("?t=").first
+      link = link.tr("/","=").split("=").last
       if (@player.song_id)
         is_current = false
       else
@@ -15,7 +16,7 @@ class SongsController < ApplicationController
       if !video
         respond_to do |format|
           format.json { render status: 400 }
-          format.html { redirect_to "/pages/home" }
+          format.html { redirect_to @room }
         end
       end
       thumbnail = "https://img.youtube.com/vi/#{link}/mqdefault.jpg"
