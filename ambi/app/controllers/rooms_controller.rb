@@ -47,7 +47,10 @@ class RoomsController < ApplicationController
     else
       current_song = Song.find(@player.song_id)
       if current_song.id.to_s != params["current_song_id"]
-        render json: [], status: 200
+        respond_to do |format|
+          format.json { render json: [], status: 200 }
+          format.html { redirect_to @room }
+        end
       else
         current_song.destroy!
         if @room.songs.any?
@@ -56,11 +59,18 @@ class RoomsController < ApplicationController
           @player.update song_id: new_song.id
           @room.reload
           sync_update @room
-          sync_update @player
-          render json: new_song.to_json, status: 200
+          # sync_update @player
+
+          respond_to do |format|
+            format.json { render json: new_song.to_json, status: 200 }
+            format.html { redirect_to @room }
+          end
         else
           @player.update song_id: nil
-          render json: [], status: 200
+          respond_to do |format|
+            format.json { render json: [], status: 200 }
+            format.html { redirect_to @room }
+          end
         end
       end
     end
