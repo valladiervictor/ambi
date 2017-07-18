@@ -24,6 +24,8 @@
 </script>
 <%= sync partial: 'current_song_title', resource: @player %>
 <% if session[:display_video] %>
+    <div id="player"></div>
+
   <%= sync partial: 'player_show', resource: @player %>
 <% end %>
 

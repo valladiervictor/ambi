@@ -43,8 +43,8 @@ class RoomsController < ApplicationController
     end
     @player = Player.find(@room.player_id)
     current_song = Song.find(@player.song_id)
-    if current_song.link != params["current_song_link"] && current_song.id.to_s != params["current_song_id"]
-      render json: current_song.to_json, status: 200
+    if current_song.id.to_s != params["current_song_id"]
+      render json: [], status: 200
     else
       Song.find(@player.song_id).destroy!
       if @room.songs.any?

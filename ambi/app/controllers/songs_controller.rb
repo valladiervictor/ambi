@@ -29,7 +29,7 @@ class SongsController < ApplicationController
       @song.save
       if (is_current)
         @player.update song_id: @song.id
-        render @room
+        sync_update @player
       else
         @room.reload
         sync_update @room
