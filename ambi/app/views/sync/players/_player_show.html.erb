@@ -54,12 +54,7 @@
           url: "<%= "/rooms/next/" + player.room_id.to_s + "?current_song_id=" + player.song_id.to_s %>",
           type: "GET",
           success: function(json) {
-            if(json.length != 0) {
-              player.loadVideoById(json.link, 5, "large")
-              player.playVideo()
-            } else {
               location.reload()
-            }
           }
         })
       }
