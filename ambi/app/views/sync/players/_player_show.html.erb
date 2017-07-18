@@ -1,5 +1,12 @@
 <div>
-  <% if player.song_id %>
+  <div id="current_song">
+  <% if !player.song_id %>
+    <p>Pas de video en cours de lecture</p>
+  </div>
+  <% else %>
+    <% current_song = Song.find(player.song_id) %>
+    <p><%= "Lecture en cours : " + current_song.name %></p>
+  </div>
   <script>
 
 
@@ -41,7 +48,6 @@
     // 4. The API will call this function when the video player is ready.
     function onPlayerReady(event) {
       event.target.playVideo();
-      window.ytPlayerLoaded = true
     }
   }
 

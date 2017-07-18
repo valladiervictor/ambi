@@ -52,13 +52,15 @@ class SongsController < ApplicationController
 
   def update
     @song = Song.find(params["id"])
-    @room = @song.room
+    @room = Room.find(@song.room_id)
+
     if (params["poll"].blank?)
       render status: 400
     end
-    if (session[@room.id.to_s + '/' + @song.id.to_s] != params["poll"].to_s)
-      @song.update poll: @song.poll + params["poll"].to_d
-      session[@room.id.to_s + '/' + @song.id.to_s] = params["poll"].to_s
+    if (session[@room.id.to_s + '/' + @song.id.to_s] != params["poll"])
+      poll = params["poll"] == "minus" ? -1 : 1
+      @song.update poll: @song.poll + poll
+      session[@room.id.to_s + '/' + @song.id.to_s] = params["poll"]
     end
     @room.reload
     sync_update @room
