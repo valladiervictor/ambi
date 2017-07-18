@@ -1,8 +1,15 @@
 == README
 
+Install
 
-rackup sync.ru -E production
-rails s
+`bundle install`
+`rails g render_sync:install`
+`rake db:setup`
+`rake db:migrate`
+
+Dans deux terminaux différents
+`rackup sync.ru -E production`
+`rails s`
 
 API YT
  AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI 
