@@ -1,7 +1,8 @@
 class RoomsController < ApplicationController
   def create
-    @player = Player.create
-    @room = Room.new name: params["room"]["name"], player_id: @player.id
+    remove_old_data
+    @player = Player.create modified_at: DateTime.now
+    @room = Room.new name: params["room"]["name"], player_id: @player.id, modified_at: DateTime.now
     randomize_id
     if @room.save
       @player.update room_id: @room.id
@@ -77,6 +78,17 @@ class RoomsController < ApplicationController
   end
 
   private
+  def remove_old_data
+    Room.where('modified_at < ?', 1.days.ago).each do |model|
+      model.destroy
+    end
+    Song.where('modified_at < ?', 1.days.ago).each do |model|
+      model.destroy
+    end
+    Player.where('modified_at < ?', 1.days.ago).each do |model|
+      model.destroy
+    end
+  end
   def randomize_id
     begin
       @room.id = SecureRandom.random_number(1_000_000)

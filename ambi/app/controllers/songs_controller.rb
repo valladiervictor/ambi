@@ -3,15 +3,20 @@ class SongsController < ApplicationController
     Yt.configuration.api_key = "AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI"
 
     @room = Room.find(params["room_id"])
-    @player = Player.find(@room.player_id)
-    if (@room)
-      link = params["song"]["link"].split("?t=").first
-      link = link.tr("/","=").split("=").last
-      if (@player.song_id)
-        is_current = false
-      else
-        is_current = true
+    if (!@room)
+      respond_to do |format|
+        format.json { render status: 400 }
+        format.html { redirect_to "/pages/home" }
       end
+    else
+      @player = Player.find(@room.player_id)
+      @room.update modified_at: DateTime.now
+      @player.update modified_at: DateTime.now
+
+      link = parseLink(params["song"]["link"])
+
+      is_current = @player.song_id ? false : true
+
       video = Yt::Video.new id: link
       if !video
         respond_to do |format|
@@ -19,15 +24,17 @@ class SongsController < ApplicationController
           format.html { redirect_to @room }
         end
       end
-      thumbnail = "https://img.youtube.com/vi/#{link}/mqdefault.jpg"
+
       @song = Song.new(
         name: video.title,
         link: link,
         room_id: is_current ? nil : params["room_id"],
         poll: 1,
-        thumbnail: thumbnail
+        thumbnail: "https://img.youtube.com/vi/#{link}/mqdefault.jpg",
+        modified_at: DateTime.now
       )
       @song.save
+
       if (is_current)
         @player.update song_id: @song.id
         sync_update @player
@@ -35,15 +42,11 @@ class SongsController < ApplicationController
         @room.reload
         sync_update @room
       end
+
       respond_to do |format|
         format.json { render json: [], status: 200 }
         format.html { redirect_to @room }
       end
-    else
-    respond_to do |format|
-      format.json { render status: 400 }
-      format.html { redirect_to "/pages/home" }
-    end
     end
   end
 
@@ -67,4 +70,9 @@ class SongsController < ApplicationController
     sync_update @room
     render status: 200
   end
+
+  private
+    def parseLink(url)
+      url.split("?t=").first.tr("/","=").split("=").last
+    end
 end
