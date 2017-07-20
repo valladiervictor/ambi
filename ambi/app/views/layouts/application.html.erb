@@ -6,10 +6,11 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= include_sync_config %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<h1>L'ambianceur</h1>
+<div class="container-fluid">
 <%= yield %>
-
+</div>
 </body>
 </html>

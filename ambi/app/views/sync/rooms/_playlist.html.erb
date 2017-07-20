@@ -1,9 +1,4 @@
 <table>
-  <tr>
-    <th></th>
-    <th>Titre</th>
-    <th>Vote</th>
-  </tr>
   <% room.songs.order("poll DESC").each do |song| %>
     <tr>
       <td><img src="<%= song.thumbnail %>" width="200"></td>
