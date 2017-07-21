@@ -60,7 +60,7 @@ class RoomsController < ApplicationController
           @player.update song_id: new_song.id
           @room.reload
           sync_update @room
-          # sync_update @player
+          sync_update @player
 
           respond_to do |format|
             format.json { render json: new_song.to_json, status: 200 }
@@ -68,6 +68,7 @@ class RoomsController < ApplicationController
           end
         else
           @player.update song_id: nil
+          sync_update @player
           respond_to do |format|
             format.json { render json: [], status: 200 }
             format.html { redirect_to @room }
