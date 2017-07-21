@@ -7,7 +7,11 @@
   margin-bottom: 50px;
 }
 
-.player {
+.player, .playlist {
   display: inline-block;
   text-align: left;
+}
+
+.centered .player {
+  text-align: center;
 }

@@ -73,6 +73,6 @@ class SongsController < ApplicationController
 
   private
     def parseLink(url)
-      url.split("?t=").first.tr("/","=").split("=").last
+      url.split("?t=").first.split("&list=").first.tr("/","=").split("=").last
     end
 end

@@ -7,16 +7,22 @@
 </header>
 
 <div class="row" id="add_video">
-  <%= form_for :song, url: "/songs/" + @room.id.to_s, method: :post, remote:(@player.song_id) do |f| %>
-    <%= f.text_field :link, placeholder: 'Lien Youtube', required: true %>
-    <%= f.submit value: "Ajouter la video" %>
+<div class="col-lg-4"></div>
+<div class="col-lg-4">
+  <%= form_for :song, url: "/songs/" + @room.id.to_s, method: :post, remote:(@player.song_id), class: "form-group" do |f| %>
+    <%= f.text_field :link, class: "form-control", placeholder: 'Lien Youtube', required: true %>
+    <%= f.submit value: "Ajouter la video", class: "btn btn-default" %>
   <% end %>
+</div>
+<div class="col-lg-4"></div>
 </div>
 
 <div class ="row">
     <% if session[:display_video] == true %>
     <div class="col-lg-6">
-      <% end %>
+    <% else %>
+    <div class="centered"
+    <% end %>
       <div class="player">
 
         <div id="activatePlayer">
@@ -47,10 +53,10 @@
   <div class="col-lg-6">
 <% end %>
 
-
-<h3>Playlist</h3>
-<%= sync partial: 'playlist', resource: @room %>
-
+<div class="playlist">
+  <h3>Playlist</h3>
+  <%= sync partial: 'playlist', resource: @room %>
+</div>
 <% if session[:display_video] == false %>
     </div>
   <div class="col-lg-4"></div>
