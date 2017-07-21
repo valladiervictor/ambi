@@ -1,3 +1,14 @@
+<header class="row">
+  <div class="col-lg-12">
+    <h1>
+      L'ambianceur
+    </h1>
+  </div>
+</header>
+
+<div class="row" id="add_video">
+<div class="col-lg-4"></div>
+<div class="col-lg-4">
 <%= form_for @room, as: :room, url: rooms_path do |f|  %>
   <% if @room.errors.any? %>
     <% @room.errors.full_messages.each do |message| %>
@@ -5,13 +16,19 @@
     <% end %>
   <% end %>
   <div class="form-group">
-  <%= f.text_field :name, placeholder: "Nom de la session", required: true %>
-  <%= f.submit value: "Créer une session" %>
+  <%= f.text_field :name, class: "form-control", placeholder: "Nom de la session", required: true %>
+  <%= f.submit value: "Créer une session", class: "btn btn-default" %>
   </div>
 <% end %>
 
 <%= @session_joining_error%>
+<div class="form-group">
 <form action="<%= rooms_path + '/join' %>", method="get" do %>
-  <input type="text" name="name" placeholder="Nom de la session à rejoindre" required />
-  <input type="submit" value="Rejoindre une session" />
+  <input type="text" class= "form-control" name="name" placeholder="Nom de la session à rejoindre" required />
+  <input type="submit" value="Rejoindre une session" class= "btn btn-default" />
 </form>
+</div>
+
+</div>
+<div class="col-lg-4"></div>
+</div>
