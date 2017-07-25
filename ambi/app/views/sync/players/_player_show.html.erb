@@ -29,7 +29,14 @@
   }
 
   function onYouTubePlayer() {
+    widthInScreen = 660
+    while ($(window).width() < widthInScreen) {
+      widthInScreen -= 100
+    }
+    heightInScreen = widthInScreen * 490 / 880
     player = new YT.Player('player', {
+      height: heightInScreen,
+      width: widthInScreen,
       videoId: "<%= Song.find(player.song_id).link %>",
       playerVars: { controls:1, showinfo: 0, rel: 0, showsearch: 0, iv_load_policy: 3 },
       events: {
