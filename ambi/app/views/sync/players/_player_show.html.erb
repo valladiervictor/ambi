@@ -30,8 +30,8 @@
 
   function onYouTubePlayer() {
     widthInScreen = 660
-    while ($(window).width() < widthInScreen) {
-      widthInScreen -= 100
+    if ($(window).width() < widthInScreen) {
+      widthInScreen = $("#add_video").width() - 30
     }
     heightInScreen = widthInScreen * 490 / 880
     player = new YT.Player('player', {

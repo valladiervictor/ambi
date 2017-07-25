@@ -1,14 +1,17 @@
 <table class="table">
   <% room.songs.order("poll DESC").each do |song| %>
     <tr>
-      <td><img src="<%= song.thumbnail %>" width="200"></td>
+      <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
       <td><%= song.name %></td>
-      <td><span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
-        <%= song.poll %>
+      <td>
         <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
+        <%= song.poll %>
+        <span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
+      </td>
     </tr>
   <% end %>
   <script>
   emptyNewSongForm()
+  sizeThumbnails()
   </script>
 </table>
