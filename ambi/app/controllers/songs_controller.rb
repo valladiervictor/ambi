@@ -68,7 +68,10 @@ class SongsController < ApplicationController
     end
     @room.reload
     sync_update @room
-    render status: 200
+    respond_to do |format|
+      format.json { render json: [], status: 200 }
+      format.html { redirect_to @room }
+    end
   end
 
   private
