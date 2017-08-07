@@ -19,7 +19,7 @@
   <div class="col-lg-6">
 <% end %>
 
-<%= render partial: 'song_lists', locals: {room: @room} %>
+<%= sync partial: 'playlist', resource: @room %>
 
 <% if session[:display_video] == false %>
 </div>

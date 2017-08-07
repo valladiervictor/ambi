@@ -1,19 +1,62 @@
 <div>
-  <table class="table">
-    <% room.songs.where(past: false).order("poll DESC").each do |song| %>
-      <tr>
-        <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
-        <td><%= song.name %></td>
-        <td>
-          <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
-          <%= song.poll %>
-          <span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
-        </td>
-      </tr>
-    <% end %>
-    <script>
-    emptyNewSongForm()
-    sizeThumbnails()
-    </script>
-  </table>
+  <div class="playlist">
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+      <li role="presentation" class="active"><a href="#playlist" aria-controls="playlist" role="tab" data-toggle="tab">Playlist</a></li>
+      <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">Historique</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="playlist">
+        <table class="table">
+          <% room.songs.where(past: false).order("poll DESC").each do |song| %>
+            <tr>
+              <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
+              <td><%= song.name %></td>
+              <td>
+                <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
+                <%= song.poll %>
+                <span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
+              </td>
+            </tr>
+          <% end %>
+          <script>
+          emptyNewSongForm()
+          sizeThumbnails()
+          </script>
+        </table>
+      </div>
+      <div role="tabpanel" class="tab-pane" id="history">
+
+        <table class="table">
+          <% room.songs.where(past: true).order("modified_at DESC").each do |song| %>
+            <tr>
+              <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
+              <td><%= song.name %></td>
+              <td>
+                <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
+                <%= song.poll %>
+                <span style="cursor: pointer; display: inline-block;" onclick="doMinus('<%= song.id.to_s %>')">👎</span>
+              </td>
+            </tr>
+          <% end %>
+          <script>
+          emptyNewSongForm()
+          sizeThumbnails()
+          </script>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    $('#playlist a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+    $('#history a').click(function (e) {
+      e.preventDefault()
+      $(this).tab('show')
+    })
+  </script>
 </div>
