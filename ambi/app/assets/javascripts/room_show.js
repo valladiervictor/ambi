@@ -2,8 +2,7 @@ function emptyNewSongForm() {
   $("#new-song-txt-field").val("")
 }
 
-function sizeThumbnails() {
-  width = 200
+function sizeThumbnails(width) {
   while(width > $(window).width() / 3) {
     width -= 10
   }
@@ -12,4 +11,14 @@ function sizeThumbnails() {
   thumbnailArray.forEach(function (img) {
     img.width = width
   });
+}
+
+function replay(link, room_id) {
+  $.ajax({
+    url: "/songs/" + room_id + "?link=" + link,
+    type: "POST"
+  })
+
+  $("#playlist_tab_link").addClass("active")
+  $("#history_tab_link").removeClass("active")
 }

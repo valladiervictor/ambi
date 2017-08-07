@@ -13,7 +13,7 @@ class SongsController < ApplicationController
       @room.update modified_at: DateTime.now.to_i
       @player.update modified_at: DateTime.now.to_i
 
-      link = parseLink(params["song"]["link"])
+      link = !params["song"].blank? ? parseLink(params["song"]["link"]) : params["link"]
 
       is_current = @player.song_id ? false : true
 
