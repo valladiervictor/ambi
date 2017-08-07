@@ -2,7 +2,7 @@ class RoomsController < ApplicationController
   def create
     remove_old_data
     @player = Player.create modified_at: DateTime.now.to_i
-    @room = Room.new name: params["room"]["name"], player_id: @player.id, modified_at: DateTime.now.to_i
+    @room = Room.new name: params["room"]["name"].rstrip, player_id: @player.id, modified_at: DateTime.now.to_i
     randomize_id
     if @room.save
       @player.update room_id: @room.id
