@@ -1,8 +1,8 @@
 class RoomsController < ApplicationController
   def create
     remove_old_data
-    @player = Player.create modified_at: DateTime.now
-    @room = Room.new name: params["room"]["name"], player_id: @player.id, modified_at: DateTime.now
+    @player = Player.create modified_at: DateTime.now.to_i
+    @room = Room.new name: params["room"]["name"].rstrip, player_id: @player.id, modified_at: DateTime.now.to_i
     randomize_id
     if @room.save
       @player.update room_id: @room.id
@@ -53,10 +53,9 @@ class RoomsController < ApplicationController
           format.html { redirect_to @room }
         end
       else
-        current_song.destroy!
-        if @room.songs.any?
-          new_song = @room.songs.order("poll DESC").first
-          new_song.update room_id: nil
+        if @room.songs.where(past: false).any?
+          new_song = @room.songs.where(past: false).order("poll DESC").first
+          new_song.update past: true, modified_at: DateTime.now.to_i
           @player.update song_id: new_song.id
           @room.reload
           sync_update @room
@@ -80,13 +79,13 @@ class RoomsController < ApplicationController
 
   private
   def remove_old_data
-    Room.where('modified_at < ?', 1.days.ago).each do |model|
+    Room.where('modified_at < ?', 1.days.ago.to_i).each do |model|
       model.destroy
     end
-    Song.where('modified_at < ?', 1.days.ago).each do |model|
+    Song.where('modified_at < ?', 1.days.ago.to_i).each do |model|
       model.destroy
     end
-    Player.where('modified_at < ?', 1.days.ago).each do |model|
+    Player.where('modified_at < ?', 1.days.ago.to_i).each do |model|
       model.destroy
     end
   end

@@ -21,3 +21,15 @@
         margin-bottom: 20px;
     }
 }
+
+.playlist {
+  width: 100%;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background-color: grey;
+}

@@ -6,45 +6,11 @@
   </div>
 </header>
 
-<div class="row" id="add_video">
-<div class="col-lg-4"></div>
-<div class="col-lg-4">
-  <%= form_for :song, url: "/songs/" + @room.id.to_s, method: :post, remote:(@player.song_id), class: "form-group" do |f| %>
-    <%= f.text_field :link, class: "form-control", id:"new-song-txt-field", placeholder: 'Lien Youtube', required: true %>
-    <%= f.submit value: "Ajouter la video", class: "btn btn-default" %>
-  <% end %>
-</div>
-<div class="col-lg-4"></div>
-</div>
 
-<div class ="row">
-    <% if session[:display_video] == true %>
-    <div class="col-lg-6">
-    <% else %>
-    <div class="centered"
-    <% end %>
-      <div class="player">
+<%= render partial: 'add_video_form', locals: {room_id: @room.id.to_s, song_id: @player.song_id} %>
 
-        <div id="activatePlayer">
-          <h3>Lecteur</h3>
-          <label class="switch">
-            <% if session[:display_video] == true %>
-              <input type="checkbox" id="unablePlayer" onchange="triggerPlayer()" checked>
-            <% else %>
-              <input type="checkbox" id="unablePlayer" onchange="triggerPlayer()">
-            <% end %>
-            <div class="slider round"></div>
-          </label>
-        </div>
+<%= render partial: 'display_video', locals: {display_video: session[:display_video], player: @player} %>
 
-        <% if session[:display_video] %>
-        <div id="player"></div>
-        <%= sync partial: 'player_show', resource: @player %>
-        <% else %>
-        <%= sync partial: 'current_song_title', resource: @player %>
-        <% end %>
-      </div>
-    </div>
 <% if session[:display_video] == false %>
   <div class="row">
     <div class="col-lg-3"></div>
@@ -53,22 +19,12 @@
   <div class="col-lg-6">
 <% end %>
 
-<div class="playlist">
-  <h3>Playlist</h3>
-  <%= sync partial: 'playlist', resource: @room %>
-</div>
-<% if session[:display_video] == false %>
-    </div>
-  <div class="col-lg-3"></div>
+<%= render partial: 'song_lists', locals: {room: @room} %>
 
+<% if session[:display_video] == false %>
+</div>
+<div class="col-lg-3"></div>
+</div>
 <% else %>
 </div>
 <% end %>
-</div>
-
-<script>
-  function triggerPlayer() {
-    let display_video = document.getElementById("unablePlayer").checked
-    window.location = "<%= '/rooms/join?name=' + @room.name + '&display_video=' %>" + display_video
-  }
-</script>

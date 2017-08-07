@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170718140038) do
+ActiveRecord::Schema.define(version: 20170804164917) do
 
   create_table "players", force: :cascade do |t|
     t.integer "song_id"
@@ -33,7 +33,9 @@ ActiveRecord::Schema.define(version: 20170718140038) do
     t.integer "poll"
     t.integer "room_id"
     t.string  "thumbnail"
-    t.date    "modified_at"
+    t.integer "modified_at"
+    t.boolean "past"
+    t.boolean "liked"
   end
 
   add_index "songs", ["room_id"], name: "index_songs_on_room_id"

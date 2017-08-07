@@ -1,7 +1,7 @@
-<div role="tabpanel" class="tab-pane active" id="playlist">
+<div role="tabpanel" class="tab-pane" id="history">
   <table class="table">
-    <% room.songs.where(past: false).order("poll DESC").each do |song| %>
-      <tr>
+    <% room.songs.where(past: true).order("modified_at DESC").each do |song| %>
+      <tr class='clickable-row' title='Réécouter' onClick="replay('<%= song.link %>', '<%= room.id.to_s %>')">
         <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
         <td><%= song.name %></td>
         <td>
@@ -13,7 +13,7 @@
     <% end %>
     <script>
     emptyNewSongForm()
-    sizeThumbnails(200)
+    sizeThumbnails(100)
     </script>
   </table>
-</div>
+</div
