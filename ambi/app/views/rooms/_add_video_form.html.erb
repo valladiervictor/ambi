@@ -1,0 +1,10 @@
+<div class="row" id="add_video">
+  <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+      <%= form_for :song, url: "/songs/" + room_id, method: :post, remote:(song_id), class: "form-group" do |f| %>
+        <%= f.text_field :link, class: "form-control", id:"new-song-txt-field", placeholder: 'Lien Youtube', required: true %>
+        <%= f.submit value: "Ajouter la video", class: "btn btn-default" %>
+      <% end %>
+    </div>
+  <div class="col-lg-4"></div>
+</div>

@@ -1,0 +1,23 @@
+<div class="playlist">
+  <ul class="nav nav-tabs nav-justified" role="tablist">
+    <li role="presentation" class="active"><a href="#playlist" aria-controls="playlist" role="tab" data-toggle="tab">Playlist</a></li>
+    <li role="presentation"><a href="#history" aria-controls="history" role="tab" data-toggle="tab">Historique</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <%= sync partial: 'playlist', resource: room %>
+    <%= sync partial: 'history', resource: room %>
+  </div>
+
+</div>
+
+<script>
+  $('#playlist a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+  $('#history a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  })
+</script>
