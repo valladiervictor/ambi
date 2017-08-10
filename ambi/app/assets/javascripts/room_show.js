@@ -2,11 +2,11 @@ function emptyNewSongForm() {
   $("#new-song-txt-field").val("")
 }
 
-function sizeThumbnails(width) {
+function sizeThumbnails(className, width) {
   while(width > $(window).width() / 3) {
     width -= 10
   }
-  thumbnails = document.querySelectorAll('.thumbnail')
+  thumbnails = document.querySelectorAll(className)
   thumbnailArray = Array.prototype.slice.call(thumbnails);
   thumbnailArray.forEach(function (img) {
     img.width = width
