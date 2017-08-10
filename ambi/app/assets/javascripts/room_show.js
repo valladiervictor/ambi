@@ -22,3 +22,11 @@ function replay(link, room_id) {
   $("#playlist_tab_link").addClass("active")
   $("#history_tab_link").removeClass("active")
 }
+
+function takeLead(room_id, user_id) {
+  let url = "/rooms/" + room_id + "/takelead?user_id=" + user_id
+  $.ajax({
+    url: "/rooms/" + room_id + "/takelead?user_id=" + user_id,
+    type: "GET"
+  })
+}

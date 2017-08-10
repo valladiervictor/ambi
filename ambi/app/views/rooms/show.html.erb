@@ -3,6 +3,8 @@
     <h1>
       <%= @room.name %>
     </h1>
+    <div id="user_id" style="visibility: hidden;"><%= session[:user_id] %></div>
+    <%= sync partial: 'owner', resource: @room %>
   </div>
 </header>
 

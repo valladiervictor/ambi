@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'rooms/join' => 'rooms#join'
   post 'songs/:room_id' => 'songs#create'
   get 'rooms/next/:room_id' => 'rooms#next'
+  get 'rooms/:room_id/takelead' => 'rooms#takeLead'
   resources :rooms, only: [:create, :show]
   resources :songs, only: [:show, :update]
 

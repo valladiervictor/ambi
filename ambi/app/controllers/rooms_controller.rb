@@ -2,11 +2,13 @@ class RoomsController < ApplicationController
   def create
     remove_old_data
     @player = Player.create modified_at: DateTime.now.to_i
-    @room = Room.new name: params["room"]["name"].rstrip, player_id: @player.id, modified_at: DateTime.now.to_i
+    owner_id = session[:user_id] || SecureRandom.uuid
+    @room = Room.new name: params["room"]["name"].rstrip, player_id: @player.id, modified_at: DateTime.now.to_i, owner: owner_id
     randomize_id
     if @room.save
       @player.update room_id: @room.id
       session[:display_video] = true
+      session[:user_id] = owner_id
       redirect_to @room
     else
       render 'pages/home'
@@ -31,6 +33,7 @@ class RoomsController < ApplicationController
       else
         session[:display_video] = params["display_video"] == "true"
       end
+      session[:user_id] = session[:user_id] || SecureRandom.uuid
       redirect_to @room
     else
       redirect_to controller: 'pages', action: 'home', session_joining_error: 'Pas de session à ce nom'
@@ -53,7 +56,12 @@ class RoomsController < ApplicationController
           format.html { redirect_to @room }
         end
       else
-        if @room.songs.where(past: false).any?
+        if session[:user_id] != @room.owner
+          respond_to do |format|
+            format.json { render json: {lead: "Not the leader"}, status: 200 }
+            format.html { redirect_to @room }
+          end
+        elsif @room.songs.where(past: false).any?
           new_song = @room.songs.where(past: false).order("poll DESC").first
           new_song.update past: true, modified_at: DateTime.now.to_i
           @player.update song_id: new_song.id
@@ -77,15 +85,25 @@ class RoomsController < ApplicationController
     end
   end
 
+  def takeLead
+    @room = Room.find(params["room_id"])
+    if @room.update owner: params[:user_id]
+      sync_update @room
+      render status: 200
+    else
+      render status: 400
+    end
+  end
+
   private
   def remove_old_data
-    Room.where('modified_at < ?', 1.days.ago.to_i).each do |model|
+    Room.where('modified_at < ?', 7.days.ago.to_i).each do |model|
       model.destroy
     end
-    Song.where('modified_at < ?', 1.days.ago.to_i).each do |model|
+    Song.where('modified_at < ?', 7.days.ago.to_i).each do |model|
       model.destroy
     end
-    Player.where('modified_at < ?', 1.days.ago.to_i).each do |model|
+    Player.where('modified_at < ?', 7.days.ago.to_i).each do |model|
       model.destroy
     end
   end

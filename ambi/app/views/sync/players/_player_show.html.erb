@@ -56,14 +56,22 @@
     //    the player should play for six seconds and then stop.
     function onPlayerStateChange(event) {
       if (event.data == YT.PlayerState.ENDED) {
-        $.ajax({
-          url: "<%= "/rooms/next/" + player.room_id.to_s + "?current_song_id=" + player.song_id.to_s %>",
-          type: "GET",
-          success: function(json) {
-              location.reload()
-          }
-        })
+        next()
       }
+    }
+
+    function next() {
+      $.ajax({
+        url: "<%= "/rooms/next/" + player.room_id.to_s + "?current_song_id=" + player.song_id.to_s %>",
+        type: "GET",
+        success: function(json) {
+          if (json.lead) {
+            setTimeout(next(), 5000);
+          } else {
+            location.reload()
+          }
+        }
+      })
     }
   </script>
   <% end %>
