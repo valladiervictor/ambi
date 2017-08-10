@@ -2,7 +2,7 @@
   <table class="table">
     <% room.songs.where(past: true).order("modified_at DESC").each do |song| %>
       <tr class='clickable-row' title='Réécouter' onClick="replay('<%= song.link %>', '<%= room.id.to_s %>')">
-        <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
+        <td><img src="<%= song.thumbnail %>" class="history-thumbnail"</td>
         <td><%= song.name %></td>
         <td>
           <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
@@ -13,7 +13,7 @@
     <% end %>
     <script>
     emptyNewSongForm()
-    sizeThumbnails(100)
+    sizeThumbnails('.history-thumbnail', 100)
     </script>
   </table>
 </div

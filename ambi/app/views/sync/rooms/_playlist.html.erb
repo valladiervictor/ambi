@@ -2,7 +2,7 @@
   <table class="table">
     <% room.songs.where(past: false).order("poll DESC").each do |song| %>
       <tr>
-        <td><img src="<%= song.thumbnail %>" class="thumbnail"</td>
+        <td><img src="<%= song.thumbnail %>" class="playlist-thumbnail"</td>
         <td><%= song.name %></td>
         <td>
           <span style="cursor: pointer; display: inline-block;" onclick="doPlus('<%= song.id.to_s %>')">👍</span>
@@ -13,7 +13,7 @@
     <% end %>
     <script>
     emptyNewSongForm()
-    sizeThumbnails(200)
+    sizeThumbnails('.playlist-thumbnail', 200)
     </script>
   </table>
 </div>
