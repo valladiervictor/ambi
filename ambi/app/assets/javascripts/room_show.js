@@ -2,7 +2,13 @@ function emptyNewSongForm() {
   $("#new-song-txt-field").val("")
 }
 
-function sizeThumbnails(className, width) {
+function sizeThumbnails() {
+  sizeThumbnailsByClass('.playlist-thumbnail', 200);
+  sizeThumbnailsByClass('.history-thumbnail', 100);
+  sizeThumbnailsByClass('.liked-thumbnail', 100);
+}
+
+function sizeThumbnailsByClass(className, width) {
   while(width > $(window).width() / 3) {
     width -= 10
   }
@@ -21,6 +27,7 @@ function replay(link, room_id) {
 
   $("#playlist_tab_link").addClass("active")
   $("#history_tab_link").removeClass("active")
+  $("#liked_tab_link").removeClass("active")
 }
 
 function takeLead(room_id, user_id) {

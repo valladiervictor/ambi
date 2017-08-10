@@ -62,7 +62,7 @@ class SongsController < ApplicationController
     @song = Song.find(params["id"])
     @room = Room.find(@song.room_id)
 
-    if (params["poll"].blank? && paramas["liked"].blank? && params["past"].blank?)
+    if (params["poll"].blank? && params["liked"].blank? && params["past"].blank?)
       render status: 400
     end
     if (params.has_key?(:poll))

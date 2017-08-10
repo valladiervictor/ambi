@@ -30,6 +30,15 @@
   cursor: pointer;
 }
 
-.clickable-row:hover {
+#history .clickable-row:hover {
   background-color: grey;
+}
+
+#liked .clickable-row:hover {
+  background-color: pink;
+  color: grey;
+}
+
+#like:hover {
+  color: red;
 }
