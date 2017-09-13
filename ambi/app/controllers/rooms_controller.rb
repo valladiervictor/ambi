@@ -3,7 +3,7 @@ class RoomsController < ApplicationController
     remove_old_data
     @player = Player.create modified_at: DateTime.now.to_i
     owner_id = session[:user_id] || SecureRandom.uuid
-    @room = Room.new name: params["room"]["name"].rstrip, player_id: @player.id, modified_at: DateTime.now.to_i, owner: owner_id
+    @room = Room.new name: params["room"]["name"].rstrip.downcase, player_id: @player.id, modified_at: DateTime.now.to_i, owner: owner_id
     randomize_id
     if @room.save
       @player.update room_id: @room.id
@@ -26,7 +26,7 @@ class RoomsController < ApplicationController
   end
 
   def join
-    @room = Room.find_by(name: params["name"])
+    @room = Room.find_by(name: params["name"].rstrip.downcase)
     if !@room.blank?
       if params["display_video"].blank?
         session[:display_video] = false
