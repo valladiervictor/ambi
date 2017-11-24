@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   post 'songs/:room_id' => 'songs#create'
   get 'rooms/next/:room_id' => 'rooms#next'
   get 'rooms/:room_id/takelead' => 'rooms#takeLead'
+  get 'players/:player_id/currentsong' => 'players#current_song'
   resources :rooms, only: [:create, :show]
   resources :songs, only: [:show, :update]
 

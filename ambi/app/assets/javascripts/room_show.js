@@ -8,6 +8,18 @@ function sizeThumbnails() {
   sizeThumbnailsByClass('.liked-thumbnail', 150);
 }
 
+function updatePlayedSong(player_id) {
+  $.ajax({
+    url: "/players/" + player_id + "/currentsong",
+    type: "GET",
+    success: (json) => {
+      if(json != {}) {
+        $("#played_song").html("Lecture en cours : " + json.name);
+      }
+    }
+  })
+}
+
 function sizeThumbnailsByClass(className, width) {
   while(width > $(window).width() / 3) {
     width -= 10

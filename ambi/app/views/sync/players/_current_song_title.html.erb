@@ -2,6 +2,6 @@
   <% if !player.song_id %>
     <p>Pas de video en cours de lecture</p>
   <% else %>
-    <p><%= "Lecture en cours : " + Song.find(player.song_id).name %></p>
+    <p id="played_song"><%= "Lecture en cours : " + Song.find(player.song_id).name %></p>
   <% end %>
 </div>
