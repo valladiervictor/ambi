@@ -1,6 +1,6 @@
 <div role="tabpanel" class="tab-pane" id="liked">
   <table class="table">
-    <% room.songs.where(liked: true).order("modified_at DESC").limit(50).to_a.uniq {|item| item.name }.each do |song| %>
+    <% room.songs.where(liked: true).order("modified_at DESC").limit(100).to_a.uniq {|item| item.name }.each do |song| %>
       <tr class='clickable-row' title='Réécouter' onClick="replay('<%= song.link %>', '<%= room.id.to_s %>')">
         <td><img src="<%= song.thumbnail %>" class="liked-thumbnail"</td>
         <td><%= song.name %></td>
