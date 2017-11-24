@@ -12,19 +12,20 @@
 
 
 <script>
-  $('#playlist a').click(function (e) {
+  $('#playlist_tab_link').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+    sizeThumbnails()
+  })
+  $('#history_tab_link').click(function (e) {
+    console.log("YOOO")
     e.preventDefault()
     sizeThumbnails()
     $(this).tab('show')
   })
-  $('#history a').click(function (e) {
+  $('#liked_tab_link').click(function (e) {
     e.preventDefault()
-    sizeThumbnails()
     $(this).tab('show')
-  })
-  $('#liked a').click(function (e) {
-    e.preventDefault()
     sizeThumbnails()
-    $(this).tab('show')
   })
 </script>
