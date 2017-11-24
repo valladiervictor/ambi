@@ -17,6 +17,7 @@ function sizeThumbnailsByClass(className, width) {
   thumbnailArray.forEach(function (img) {
     img.width = width
   });
+  activateDefaultSongList()
 }
 
 function replay(link, room_id) {
@@ -24,10 +25,7 @@ function replay(link, room_id) {
     url: "/songs/" + room_id + "?link=" + link,
     type: "POST"
   })
-
-  $("#playlist_tab_link").addClass("active")
-  $("#history_tab_link").removeClass("active")
-  $("#liked_tab_link").removeClass("active")
+  activateDefaultSongList()
 }
 
 function takeLead(room_id, user_id) {
@@ -36,4 +34,10 @@ function takeLead(room_id, user_id) {
     url: "/rooms/" + room_id + "/takelead?user_id=" + user_id,
     type: "GET"
   })
+}
+
+function activateDefaultSongList() {
+  $("#playlist_tab_link").addClass("active")
+  $("#history_tab_link").removeClass("active")
+  $("#liked_tab_link").removeClass("active")
 }
