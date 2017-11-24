@@ -50,30 +50,30 @@ class RoomsController < ApplicationController
       render json: [], status: 200
     else
       current_song = Song.find(@player.song_id)
-      if current_song.id.to_s != params["current_song_id"]
+      if current_song.id.to_s != params["current_song_id"] # If player is not up to date
         respond_to do |format|
-          format.json { render json: [], status: 200 }
+          format.json { render json: {}, status: 200 }
           format.html { redirect_to @room }
         end
       else
-        if session[:user_id] != @room.owner
+        if session[:user_id] != @room.owner # Only the leader can pass a song
           respond_to do |format|
-            format.json { render json: {lead: "Not the leader"}, status: 200 }
+            format.json { render json: {lead: "Wait"}, status: 200 }
             format.html { redirect_to @room }
           end
-        elsif @room.songs.where(past: false).any?
+        elsif @room.songs.where(past: false).any? # If there is a song in the playlist
           new_song = @room.songs.where(past: false).order("poll DESC").first
           new_song.update past: true, modified_at: DateTime.now.to_i
           @player.update song_id: new_song.id
           @room.reload
           sync_update @room
-          sync_update @player
+          # sync_update @player
 
           respond_to do |format|
             format.json { render json: new_song.to_json, status: 200 }
             format.html { redirect_to @room }
           end
-        else
+        else  # If there is no song in the playlist
           @player.update song_id: nil
           sync_update @player
           respond_to do |format|
