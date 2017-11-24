@@ -3,9 +3,9 @@ function emptyNewSongForm() {
 }
 
 function sizeThumbnails() {
-  sizeThumbnailsByClass('.playlist-thumbnail', 200);
-  sizeThumbnailsByClass('.history-thumbnail', 100);
-  sizeThumbnailsByClass('.liked-thumbnail', 100);
+  sizeThumbnailsByClass('.playlist-thumbnail', 150);
+  sizeThumbnailsByClass('.history-thumbnail', 150);
+  sizeThumbnailsByClass('.liked-thumbnail', 150);
 }
 
 function sizeThumbnailsByClass(className, width) {
