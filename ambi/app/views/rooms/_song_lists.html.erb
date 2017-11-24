@@ -6,12 +6,10 @@
   </ul>
 
   <div class="tab-content">
-    <%= sync partial: 'playlist', resource: room %>
-    <%= sync partial: 'history', resource: room %>
-    <%= sync partial: 'liked', resource: room %>
+    <%= sync partial: 'song_lists', resource: room %>
   </div>
-
 </div>
+
 
 <script>
   $('#playlist a').click(function (e) {

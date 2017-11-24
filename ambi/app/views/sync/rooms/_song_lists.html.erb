@@ -1,0 +1,8 @@
+<%= sync partial: 'playlist', resource: room %>
+<%= sync partial: 'history', resource: room %>
+<%= sync partial: 'liked', resource: room %>
+<script>
+    emptyNewSongForm()
+    sizeThumbnails()
+    updatePlayedSong('<%= room.player_id.to_s %>')
+</script>

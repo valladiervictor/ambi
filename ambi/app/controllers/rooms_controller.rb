@@ -61,7 +61,7 @@ class RoomsController < ApplicationController
             format.json { render json: {lead: "Wait"}, status: 200 }
             format.html { redirect_to @room }
           end
-        elsif @room.songs.where(past: false).any? # If there is a song in the playlist
+        elsif @room.songs.where(past: false).any? # If there is a song in the playlist: pass to it
           new_song = @room.songs.where(past: false).order("poll DESC").first
           new_song.update past: true, modified_at: DateTime.now.to_i
           @player.update song_id: new_song.id
