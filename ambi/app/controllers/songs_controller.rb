@@ -65,13 +65,13 @@ class SongsController < ApplicationController
     if (params["poll"].blank? && params["liked"].blank? && params["past"].blank?)
       render status: 400
     end
-    if (params.has_key?(:poll))
+    if (params.has_key?(:poll))   # Incoming vote in the playlist
       if (session[@room.id.to_s + '/' + @song.id.to_s] != params["poll"])
         poll = params["poll"] == "minus" ? -1 : 1
         @song.update poll: @song.poll + poll
         session[@room.id.to_s + '/' + @song.id.to_s] = params["poll"]
       end
-    elsif (params.has_key?(:liked))
+    elsif (params.has_key?(:liked))   # New liked song
       @song.update liked: true
     end
     @room.reload

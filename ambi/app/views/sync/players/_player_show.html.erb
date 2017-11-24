@@ -2,14 +2,13 @@
   <div id="current_song">
   <% if !player.song_id %>
     <p>Pas de video en cours de lecture</p>
-  </div>
+    </div>
   <% else %>
     <% current_song = Song.find(player.song_id) %>
-    <% like_color = current_song.liked ? "red" : "white" %>
     <p><%= "Lecture en cours : " + current_song.name %></p>
-    <span id="like" title="Kiffant" onClick="like('<%= player.song_id.to_s %>')" style="color: <%= like_color %>; cursor: pointer; font-size: xx-large;">❤</span>
-  </div>
-  <%= link_to "Next", "/rooms/next/" + player.room_id.to_s + "?current_song_id=" + player.song_id.to_s %>
+    <%= link_to "Next", "/rooms/next/" + player.room_id.to_s + "?current_song_id=" + player.song_id.to_s %>
+    </div>
+
   <script>
 
   var player;
@@ -76,15 +75,6 @@
       })
     }
 
-    function like(song_id) {
-      $.ajax({
-        url: "/songs/" + song_id + "?liked=true",
-        type: "PATCH",
-        success: () => {
-          $("#like").attr("style", "color: red; font-size: xx-large;");
-        }
-      })
-    }
   </script>
   <% end %>
 </div>

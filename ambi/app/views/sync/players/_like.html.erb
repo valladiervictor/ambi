@@ -1,0 +1,18 @@
+<div>
+  <% if player.song_id %>
+    <% current_song = Song.find(player.song_id) %>
+    <% like_color = current_song.liked ? "red" : "white" %>
+    <span id="like" title="Kiffant" onClick="like('<%= player.song_id.to_s %>')" style="color: <%= like_color %>; cursor: pointer; font-size: xx-large;">❤</span>
+    <script>
+        function like(song_id) {
+          $.ajax({
+            url: "/songs/" + song_id + "?liked=true",
+            type: "PATCH",
+            success: () => {
+              $("#like").attr("style", "color: red; font-size: xx-large;");
+            }
+          })
+        }
+    </script>
+  <% end %>
+</div>
