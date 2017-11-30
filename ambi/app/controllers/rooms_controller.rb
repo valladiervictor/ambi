@@ -58,7 +58,7 @@ class RoomsController < ApplicationController
       else
         if session[:user_id] != @room.owner # Only the leader can pass a song
           respond_to do |format|
-            format.json { render json: {lead: "Wait"}, status: 200 }
+            format.json { render json: {lead: "wait"}, status: 200 }
             format.html { redirect_to @room }
           end
         elsif @room.songs.where(past: false).any? # If there is a song in the playlist: pass to it

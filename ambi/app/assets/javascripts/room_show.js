@@ -33,7 +33,7 @@ function updatePlayedSong(player_id) {
     type: "GET",
     success: (json) => {
       if(json != {}) {
-        $("#played_song").html("Lecture en cours : " + json.name);
+        $("#played_song").html("Lecture en cours chez le leader : " + json.name);
       }
     }
   })
