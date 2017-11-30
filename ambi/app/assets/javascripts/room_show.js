@@ -8,6 +8,25 @@ function sizeThumbnails() {
   sizeThumbnailsByClass('.liked-thumbnail', 150);
 }
 
+function displayPlaylist() {
+  $("#table-history").css("display", "none");
+  $("#table-liked").css("display", "none");
+  $("#table-playlist").css("display", "block");
+  $("#playlist_tab_link").addClass("active");
+  $("#history_tab_link").removeClass("active");
+  $("#liked_tab_link").removeClass("active");
+}
+function displayLiked() {
+  $("#table-history").css("display", "none");
+  $("#table-playlist").css("display", "none");
+  $("#table-liked").css("display", "block");
+}
+function displayHistory() {
+  $("#table-playlist").css("display", "none");
+  $("#table-liked").css("display", "none");
+  $("#table-history").css("display", "block");
+}
+
 function updatePlayedSong(player_id) {
   $.ajax({
     url: "/players/" + player_id + "/currentsong",
@@ -29,7 +48,7 @@ function sizeThumbnailsByClass(className, width) {
   thumbnailArray.forEach(function (img) {
     img.width = width
   });
-  activateDefaultSongList()
+  displayPlaylist();
 }
 
 function replay(link, room_id) {
@@ -37,7 +56,8 @@ function replay(link, room_id) {
     url: "/songs/" + room_id + "?link=" + link,
     type: "POST"
   })
-  activateDefaultSongList()
+  activateDefaultSongList();
+  displayPlaylist();
 }
 
 function takeLead(room_id, user_id) {
@@ -46,10 +66,4 @@ function takeLead(room_id, user_id) {
     url: "/rooms/" + room_id + "/takelead?user_id=" + user_id,
     type: "GET"
   })
-}
-
-function activateDefaultSongList() {
-  $("#playlist_tab_link").addClass("active")
-  $("#history_tab_link").removeClass("active")
-  $("#liked_tab_link").removeClass("active")
 }
