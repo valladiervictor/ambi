@@ -1,5 +1,9 @@
 == README
 
+Install Rails environment
+https://gorails.com/setup/ubuntu/16.04 (ubuntu)
+
+
 Install
 
 `bundle install`
