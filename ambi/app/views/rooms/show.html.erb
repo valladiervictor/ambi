@@ -8,7 +8,7 @@
   <%= sync partial: 'owner', resource: @room %>
 </header>
 
-<%= render partial: 'add_video_form', locals: {room_id: @room.id.to_s, song_id: @player.song_id} %>
+<%= render partial: 'search_bar', locals: {room_id: @room.id.to_s, song_id: @player.song_id} %>
 
 <%= render partial: 'display_video', locals: {display_video: session[:display_video], player: @player, room: @room} %>
 

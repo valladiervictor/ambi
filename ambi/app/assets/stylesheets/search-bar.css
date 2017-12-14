@@ -47,6 +47,8 @@
     cursor: pointer;
     list-style-type: none;
     text-align: left;
+    position: absolute;
+    z-index: 2;
 }
 .ui-autocomplete li:hover {
     background-color: rgba(150,150,150,0.7);
