@@ -2,7 +2,7 @@
   <div class="row-fluid" id="add_video">
     <div class="col-lg-4"></div>
       <div class="col-lg-4">
-          <div class="container-4">
+          <div class="container-4" id="search-container">
             <form action="" method="post" name="hyv-yt-search" id="hyv-yt-search">
               <input type="search" name="hyv-search" id="hyv-search" placeholder="Chercher une video" class="ui-autocomplete-input" autocomplete="off">
               <button class="icon" id="hyv-searchBtn"></button>
@@ -48,7 +48,8 @@ $(document).ready(function() {
     setTimeout( function () {
     youtubeApiCall();
     }, 300);
-    }
+  },
+  appendTo: '#search-container'
   });
 });
 
@@ -82,4 +83,5 @@ $('html').click(function(event){
     $("#hyv-watch-related").html("");
   }
  });
+
 </script>
