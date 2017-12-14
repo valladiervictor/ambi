@@ -3,5 +3,6 @@
     <p>Pas de video en cours de lecture</p>
   <% else %>
     <p id="played_song"><%= "Lecture en cours chez le leader : " + Song.find(player.song_id).name %></p>
+    <%= sync partial: 'like', resource: Room.find(player.room_id) %>
   <% end %>
 </div>

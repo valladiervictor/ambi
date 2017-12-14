@@ -1,8 +1,8 @@
 <div>
-  <% if player.song_id %>
-    <% current_song = Song.find(player.song_id) %>
+  <% if room.player.song_id %>
+    <% current_song = Song.find(room.player.song_id) %>
     <% like_color = current_song.liked ? "red" : "white" %>
-    <span id="like" title="Kiffant" onClick="like('<%= player.song_id.to_s %>')" style="color: <%= like_color %>; cursor: pointer; font-size: xx-large;">❤</span>
+    <span id="like" title="Kiffant" onClick="like('<%= room.player.song_id.to_s %>')" style="color: <%= like_color %>;">❤</span>
     <script>
         function like(song_id) {
           $.ajax({

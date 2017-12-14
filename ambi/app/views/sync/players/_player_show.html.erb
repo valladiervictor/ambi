@@ -7,6 +7,7 @@
     <% current_song = Song.find(player.song_id) %>
     <p><%= "Lecture en cours chez le leader : " + current_song.name %></p>
     <a id="a-next" onclick="next()">Next</a>
+    <%= sync partial: 'like', resource: Room.find(player.room_id) %>
     </div>
 
   <script>

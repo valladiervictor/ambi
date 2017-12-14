@@ -10,7 +10,7 @@
 
 <%= render partial: 'add_video_form', locals: {room_id: @room.id.to_s, song_id: @player.song_id} %>
 
-<%= render partial: 'display_video', locals: {display_video: session[:display_video], player: @player} %>
+<%= render partial: 'display_video', locals: {display_video: session[:display_video], player: @player, room: @room} %>
 
 <% if session[:display_video] == true %>
   <div class="col-lg-6">

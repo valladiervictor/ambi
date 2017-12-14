@@ -22,10 +22,8 @@
         <% if display_video %>
         <div id="player"></div>
         <%= sync partial: 'player_show', resource: player %>
-        <%= sync partial: 'like', resource: player %>
         <% else %>
         <%= sync partial: 'current_song_title', resource: player %>
-        <%= sync partial: 'like', resource: player %>
         <% end %>
       </div>
     </div>
