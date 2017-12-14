@@ -56,8 +56,9 @@ function replay(link, room_id) {
     url: "/songs/" + room_id + "?link=" + link,
     type: "POST"
   })
-  activateDefaultSongList();
   displayPlaylist();
+  $("#hyv-search").val("");
+  $("#hyv-watch-related").html("");
 }
 
 function takeLead(room_id, user_id) {
