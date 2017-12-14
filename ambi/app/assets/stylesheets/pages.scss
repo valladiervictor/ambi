@@ -22,6 +22,11 @@
     }
 }
 
+@media (min-width: 767px) {
+    #home-title {
+        margin-top: 150px;
+    }
+}
 .playlist {
   width: 100%;
 }
@@ -49,4 +54,23 @@
 
 #like:hover {
   color: pink;
+}
+
+@font-face {
+ font-family: "Hastoler";
+ src: url("Hastoler.otf");
+}
+
+h1 {
+  font-family: "Hastoler";
+  color: rgb(0, 128, 255);
+  font-size: 500%;
+}
+
+@media (min-width: 767px) {
+  #ownership {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+  }
 }

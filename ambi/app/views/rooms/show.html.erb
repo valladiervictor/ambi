@@ -4,8 +4,8 @@
       <%= @room.name.capitalize %>
     </h1>
     <div id="user_id" style="visibility: hidden;"><%= session[:user_id] %></div>
-    <%= sync partial: 'owner', resource: @room %>
   </div>
+  <%= sync partial: 'owner', resource: @room %>
 </header>
 
 <%= render partial: 'add_video_form', locals: {room_id: @room.id.to_s, song_id: @player.song_id} %>
