@@ -100,7 +100,7 @@ class RoomsController < ApplicationController
     Room.where('modified_at < ?', 7.days.ago.to_i).each do |model|
       model.destroy
     end
-    Song.where('modified_at < ?', 7.days.ago.to_i).each do |model|
+    Song.where('modified_at < ? AND liked = ?', 30.days.ago.to_i, false).each do |model|
       model.destroy
     end
     Player.where('modified_at < ?', 7.days.ago.to_i).each do |model|
