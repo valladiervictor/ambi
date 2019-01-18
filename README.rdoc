@@ -1,23 +1,16 @@
-== README
+= README
 
-Install Rails environment
-https://gorails.com/setup/ubuntu/16.04 (ubuntu)
+== Requirements
 
+docker : https://docs.docker.com/install/linux/docker-ce/ubuntu/
 
-Install
+docker-compose : https://docs.docker.com/compose/install/
 
-`bundle install`
+== To run
 
-`rails g render_sync:install`
+`docker-compose up -d`
 
-`rake db:setup`
-
-`rake db:migrate`
-
-
-Dans deux terminaux différents
-`rackup sync.ru -E production -p 9292 -o 0.0.0.0`
-`rails s -b 0.0.0.0`
+== Other
 
 API YT
- AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI 
+ AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI
