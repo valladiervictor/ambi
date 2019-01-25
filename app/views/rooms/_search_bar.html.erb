@@ -70,7 +70,10 @@ function youtubeApiCall(){
   $('.btn-group').show();
    var items = data.items, videoList = "<table class='table'>";
    $.each(items, function(index,e) {
-     videoList = videoList + '<tr class="clickable-row" id="video-suggestion" title="Voir cette vidéo" onClick="replay(\'' + e.id.videoId + '\', \'' + <%= room_id.to_s %> + '\')"><td><img alt="'+e.snippet.title+'" src="'+e.snippet.thumbnails.default.url+'" width="120" height="90"></td><td>' + e.snippet.title + '</td></tr>';
+     console.log(e);
+     console.log(e.id.kind == 'youtube#playlist');
+     videoList = videoList +
+       '<tr class="clickable-row" id="video-suggestion" title="Voir cette vidéo" onClick="replay(\'' + e.id.videoId + '\', \'' + <%= room_id.to_s %> + '\')"><td><img alt="'+e.snippet.title+'" src="'+e.snippet.thumbnails.default.url+'" width="120" height="90"></td><td>' + e.snippet.title + '</td></tr>';
    });
    videoList += '</table>'
    $("#hyv-watch-related").html(videoList);

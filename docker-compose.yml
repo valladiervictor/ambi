@@ -2,9 +2,9 @@ drkiq:
   build: .
   command: rails s -b 0.0.0.0
   ports:
-    - '80:3000'
+    - '3000:3000'
   volumes:
-    - "/home/ambianceur/development.sqlite3:/drkiq/db/development.sqlite3"
+    - "/home/antoine/development.sqlite3:/drkiq/db/development.sqlite3"
 
 sidekiq:
   build: .

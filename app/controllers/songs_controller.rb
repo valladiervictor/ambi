@@ -20,6 +20,10 @@ class SongsController < ApplicationController
       video = Yt::Video.new id: link
 
       begin
+        #print params
+        #print link
+        puts 'allo'
+        print params
         @song = Song.new(
           name: video.title,
           link: link,
