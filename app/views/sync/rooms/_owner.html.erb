@@ -1,16 +1,16 @@
 <div id="ownership">
-  <span id="leader" class="clickable-row"></span>
+  <a id="leader" href="#"></a>
   <script>
-  if($('#user_id').text() == '<%= room.owner %>') {
-   $("#leader").text('👑')
-   $("#leader").attr("onclick", "")
-   $("#leader").attr("style", "font-size: xx-large; color: gold;")
-   $("#leader").attr("title", "You're the leader")
- } else {
-    $("#leader").text('Prendre le lead? 👑')
-    $("#leader").attr("onclick", "takeLead(<%= room.id.to_s %>, $('#user_id').text())")
-    $("#leader").attr("title", "Le leader est celui qui donne le rythme d'enchaînement des vidéos.")
-  }
-
+    if($('#user_id').text() == '<%= room.owner %>') {
+      $("#leader").text('👑')
+      $("#leader").attr("onclick", "")
+      $("#leader").attr("disabled", true)
+      $("#leader").attr("style", "font-size: xx-large; color: gold;")
+      $("#leader").attr("title", "You're the leader")
+    } else {
+      $("#leader").text('Prendre le lead? 👑')
+      $("#leader").attr("onclick", "event.preventDefault(); takeLead(<%= room.id.to_s %>, $('#user_id').text())")
+      $("#leader").attr("title", "Le leader est celui qui donne le rythme d'enchaînement des vidéos.")
+    }
   </script>
 </div>
