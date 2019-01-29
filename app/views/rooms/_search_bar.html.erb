@@ -17,71 +17,31 @@
   </div>
 </div>
 
+<template id="searchResults">
+  <table class='table'>
+    <tbody></tbody>
+  </table>
+</template>
+
+<template id="searchResult">
+  <li class="clickable-row video-suggestion" data-room-id="<%= room_id.to_s %>" title="Voir cette vidéo">
+    <img class="search-result-thumbnail" />
+    <span class="search-result-title"></span>
+  </li>
+</template>
+
 <script>
-$(document).ready(function() {
-  $("#hyv-searchBtn").on( "click", function( event ) {
-    youtubeApiCall();
-    return false;
+  $(document).ready(function() {
+    $("#hyv-searchBtn").on("click", function( event ) {
+      youtubeApiCall();
+      return false;
+    });
+    autocomplete("#hyv-search");
   });
-  jQuery( "#hyv-search" ).autocomplete({
-    source: function( request, response ) {
-      //console.log(request.term);
-      var sqValue = [];
-      jQuery.ajax({
-        type: "POST",
-        url: "http://suggestqueries.google.com/complete/search?hl=en&ds=yt&client=youtube&hjson=t&cp=1",
-        dataType: 'jsonp',
-        data: jQuery.extend({
-        q: request.term
-        }, { }),
-        success: function(data){
-          console.log(data[1]);
-          obj = data[1];
-          jQuery.each( obj, function( key, value ) {
-            sqValue.push(value[0]);
-          });
-          response( sqValue);
-        }
-      });
-    },
-    select: function( event, ui ) {
-    setTimeout( function () {
-    youtubeApiCall();
-    }, 300);
-  },
-  appendTo: '#search-container'
+
+  $('html').click(function(event){
+    if(!event.target.classList.contains('video-suggestion')) {
+      $("#hyv-watch-related").html("");
+    }
   });
-});
-
-function youtubeApiCall(){
- $.ajax({
-   cache: false,
-   data: $.extend({
-     key: 'AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI',
-     q: $('#hyv-search').val(),
-     part: 'snippet'
-   }, {maxResults:5}),
-   dataType: 'json',
-   type: 'GET',
-   timeout: 5000,
-   url: 'https://www.googleapis.com/youtube/v3/search'
- })
-.done(function(data) {
-  $('.btn-group').show();
-   var items = data.items, videoList = "<table class='table'>";
-   $.each(items, function(index,e) {
-     videoList = videoList + '<tr class="clickable-row" id="video-suggestion" title="Voir cette vidéo" onClick="replay(\'' + e.id.videoId + '\', \'' + <%= room_id.to_s %> + '\')"><td><img alt="'+e.snippet.title+'" src="'+e.snippet.thumbnails.default.url+'" width="120" height="90"></td><td>' + e.snippet.title + '</td></tr>';
-   });
-   videoList += '</table>'
-   $("#hyv-watch-related").html(videoList);
- });
-}
-
-
-$('html').click(function(event){
-  if(event.target.id != 'video-suggestion') {
-    $("#hyv-watch-related").html("");
-  }
- });
-
 </script>

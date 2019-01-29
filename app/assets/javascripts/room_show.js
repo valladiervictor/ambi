@@ -51,6 +51,33 @@ function sizeThumbnailsByClass(className, width) {
   displayPlaylist();
 }
 
+function fetchPlaylistItems(playlist_id, room_id) {
+  $.ajax({
+    cache: false,
+    data: {
+      key: 'AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI',
+      playlistId: playlist_id,
+      part: 'snippet',
+      maxResults:5
+    },
+    dataType: 'json',
+    type: 'GET',
+    timeout: 5000,
+    url: 'https://www.googleapis.com/youtube/v3/playlistItems'
+  })
+  .done(function(data) {
+    for (const item of data.items) {
+      $.ajax({
+        url: "/songs/" + room_id + "?link=" + item.snippet.resourceId.videoId,
+        type: "POST"
+      })
+    }
+    displayPlaylist();
+    $("#hyv-search").val("");
+    $("#hyv-watch-related").html("");
+  });
+}
+
 function replay(link, room_id) {
   $.ajax({
     url: "/songs/" + room_id + "?link=" + link,
