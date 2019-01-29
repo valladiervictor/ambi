@@ -14,23 +14,19 @@ class SongsController < ApplicationController
       @player.update modified_at: DateTime.now.to_i
 
       link = !params["song"].blank? ? parseLink(params["song"]["link"]) : params["link"]
+      isPlaylist = !params["song"].blank? ? parseLink(params["song"]["playlist"]) : params["playlist"]
 
       is_current = @player.song_id ? false : true
 
-      video = Yt::Video.new id: link
 
       begin
-        @song = Song.new(
-          name: video.title,
-          link: link,
-          room_id: params["room_id"],
-          poll: 1,
-          thumbnail: "https://img.youtube.com/vi/#{link}/mqdefault.jpg",
-          modified_at: DateTime.now.to_i,
-          past: false,
-          liked: false
-        )
-        @song.save
+        puts "------------------------------------------------------------------------"
+        puts params
+        if (isPlaylist == "false")
+          addVideoFromLink(link)
+        else
+          addAllVideosFromPlaylist(link)
+        end
 
         if (is_current)
           @player.update song_id: @song.id
@@ -46,6 +42,7 @@ class SongsController < ApplicationController
           format.html { redirect_to @room }
         end
       rescue Exception => e
+        puts e
         respond_to do |format|
           format.json { render json: { error: e }, status: 400 }
           format.html { redirect_to @room }
@@ -81,9 +78,30 @@ class SongsController < ApplicationController
       format.html { redirect_to @room }
     end
   end
+  def addVideoFromLink(youtubeId, priority = 1)
+    video = Yt::Video.new id: youtubeId
+    @song = Song.new(
+      name: video.title,
+      link: youtubeId,
+      room_id: params["room_id"],
+      poll: priority,
+      thumbnail: "https://img.youtube.com/vi/#{youtubeId}/mqdefault.jpg",
+      modified_at: DateTime.now.to_i,
+      past: false,
+      liked: false
+    )
+    @song.save
+  end
 
   private
     def parseLink(url)
       url.split("&").first.tr("/","=").split("=").last
+    end
+    def addAllVideosFromPlaylist(link)
+      playlist = Yt::Playlist.new id: link
+      playlist.playlist_items.each do |pit|
+        addVideoFromLink(pit.video_id, 0)
+      end
+
     end
 end

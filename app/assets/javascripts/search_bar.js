@@ -54,11 +54,12 @@ function youtubeApiCall() {
       if (item.id.kind === 'youtube#playlist') {
         console.log({ searchResult })
         searchResult.dataset.youtubeId = item.id.playlistId;
-        searchResult.addEventListener('click', addYouTubePlaylist);
+        searchResult.dataset.isPlaylist = true;
       } else {
         searchResult.dataset.youtubeId = item.id.videoId;
-        searchResult.addEventListener('click', addYouTubeVideo);
+        searchResult.dataset.isPlaylist = false;
       }
+        searchResult.addEventListener('click', addYouTubeLink);
 
       const thumbnail = searchResult.querySelector('.search-result-thumbnail');
       thumbnail.alt = item.snippet.title;
@@ -71,14 +72,8 @@ function youtubeApiCall() {
   });
 }
 
-function addYouTubePlaylist(event) {
-  console.log('add yt playlist')
-  const { youtubeId, roomId } = event.target.dataset;
-  fetchPlaylistItems(youtubeId, roomId);
-}
-
-function addYouTubeVideo(event) {
-  const { youtubeId, roomId } = event.target.dataset;
-  replay(youtubeId, roomId);
+function addYouTubeLink(event) {
+  const { youtubeId, roomId, isPlaylist } = event.target.dataset;
+  replay(youtubeId, roomId, isPlaylist);
 }
 
