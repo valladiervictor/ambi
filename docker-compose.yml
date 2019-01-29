@@ -4,7 +4,7 @@ drkiq:
   ports:
     - '3000:3000'
   volumes:
-    - "/home/ambianceur/development.sqlite3:/drkiq/db/development.sqlite3"
+    - "./:/drkiq"
 
 sidekiq:
   build: .
