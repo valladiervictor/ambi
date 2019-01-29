@@ -5,7 +5,7 @@ class SongsController < ApplicationController
     @room = Room.find(params["room_id"])
     if (!@room)
       respond_to do |format|
-        format.json { render status: 400 }
+        format.json { render json: { error: 'missing room id' }, status: 400 }
         format.html { redirect_to "/pages/home" }
       end
     else
@@ -45,9 +45,9 @@ class SongsController < ApplicationController
           format.json { render json: [], status: 200 }
           format.html { redirect_to @room }
         end
-      rescue
+      rescue Exception => e
         respond_to do |format|
-          format.json { render status: 400 }
+          format.json { render json: { error: e }, status: 400 }
           format.html { redirect_to @room }
         end
       end
