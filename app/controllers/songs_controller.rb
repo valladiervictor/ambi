@@ -22,10 +22,10 @@ class SongsController < ApplicationController
       begin
         puts "------------------------------------------------------------------------"
         puts params
-        if (isPlaylist == "false")
-          addVideoFromLink(link)
-        else
+        if (isPlaylist == "true")
           addAllVideosFromPlaylist(link)
+        else
+          addVideoFromLink(link)
         end
 
         if (is_current)

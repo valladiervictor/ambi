@@ -73,6 +73,7 @@ function youtubeApiCall() {
 }
 
 function addYouTubeLink(event) {
+  console.log(event.target.dataset);
   const { youtubeId, roomId, isPlaylist } = event.target.dataset;
   replay(youtubeId, roomId, isPlaylist);
 }
