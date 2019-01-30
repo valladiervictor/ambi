@@ -28,11 +28,22 @@ function autocomplete(search_bar_id) {
 }
 
 function youtubeApiCall() {
+  var strToFind = $('#hyv-search').val();
+  if (strToFind.search("youtube.com") != -1) {
+    var parsedUrl = new URL(strToFind);
+    var videoId = parsedUrl.searchParams.get("v");
+    var playlistId = parsedUrl.searchParams.get("list");
+    if (videoId != null) {
+      strToFind = videoId;
+    } else if (playlistId != null) {
+      strToFind = playlistId;
+    }
+  }
   $.ajax({
     cache: false,
     data: $.extend({
       key: 'AIzaSyCYHhhQAawBIb0xH-xDj1Hd0j3tmnTpnxI',
-      q: $('#hyv-search').val(),
+      q: strToFind,
       part: 'snippet'
     }, {maxResults:5}),
     dataType: 'json',
