@@ -79,18 +79,22 @@ class SongsController < ApplicationController
     end
   end
   def addVideoFromLink(youtubeId, priority = 1)
-    video = Yt::Video.new id: youtubeId
-    @song = Song.new(
-      name: video.title,
-      link: youtubeId,
-      room_id: params["room_id"],
-      poll: priority,
-      thumbnail: "https://img.youtube.com/vi/#{youtubeId}/mqdefault.jpg",
-      modified_at: DateTime.now.to_i,
-      past: false,
-      liked: false
-    )
-    @song.save
+    begin
+      video = Yt::Video.new id: youtubeId
+      @song = Song.new(
+        name: video.title,
+        link: youtubeId,
+        room_id: params["room_id"],
+        poll: priority,
+        thumbnail: "https://img.youtube.com/vi/#{youtubeId}/mqdefault.jpg",
+        modified_at: DateTime.now.to_i,
+        past: false,
+        liked: false
+      )
+      @song.save
+    rescue => ex
+      puts ex.message
+    end
   end
 
   private
